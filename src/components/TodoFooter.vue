@@ -1,7 +1,7 @@
 <template>
   <div class="todo-footer">
     <label>
-      <input type="checkbox" />
+      <input type="checkbox" v-model="isChecked" />
     </label>
     <span>
       <span>已完成{{ count }}</span> / 全部{{ todos.length }}
@@ -12,12 +12,24 @@
 <script>
 export default {
   props: {
-    todos: Array
+    todos: Array,
+    CheckedAll: Function
+  },
+  data() {
+    return {};
   },
   computed: {
     //勾选的个数
     count() {
       return this.todos.reduce((pre, todo) => pre + (todo.isShow ? 1 : 0), 0);
+    },
+    isChecked: {
+      get() {
+        return this.todos.length === this.count && this.count > 0;
+      },
+      set(val) {
+        this.CheckedAll(val);
+      }
     }
   }
 };

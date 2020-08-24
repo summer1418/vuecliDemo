@@ -1,13 +1,13 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <TodoHeader :addTodo="addTodo" />
+      <TodoHeader @addTodo="addTodo" />
       <TodoList
         :todos="todos"
         :deleteToDo="deleteToDo"
         :toggleToDo="toggleToDo"
       />
-      <TodoFooter :todos="todos" />
+      <TodoFooter :todos="todos" :CheckedAll="CheckedAll" />
     </div>
   </div>
 </template>
@@ -16,24 +16,33 @@
 import TodoHeader from "./components/TodoHeader.vue";
 import TodoList from "./components/TodoList.vue";
 import TodoFooter from "./components/TodoFooter.vue";
-
+import PubSub from "pubsub-js";
 export default {
   name: "App",
   // 注册组件
   components: {
     TodoHeader,
     TodoList,
-    TodoFooter
+    TodoFooter,
   },
+
   // 和之前的data中的写法一样
   data() {
     return {
       todos: [
         { id: 1, title: "奔驰", isShow: false },
         { id: 2, title: "宝马", isShow: true },
-        { id: 3, title: "奥拓", isShow: false }
-      ]
+        { id: 3, title: "奥拓", isShow: false },
+      ],
     };
+  },
+  mounted() {
+    this.$bus.$on("toggleToDo", (todo) => {
+      this.toggleToDo(todo);
+    });
+    PubSub.subscribe("deleteToDo", (msg, index) => {
+      this.deleteToDo(index);
+    });
   },
   methods: {
     deleteToDo(index) {
@@ -45,8 +54,13 @@ export default {
     // 传入一个对象,判断是否选中
     toggleToDo(todo) {
       todo.isShow = !todo.isShow;
-    }
-  }
+    },
+    CheckedAll(isChecked) {
+      this.todos.forEach((todo) => {
+        todo.isShow = isChecked;
+      });
+    },
+  },
 };
 </script>
 <style scoped>

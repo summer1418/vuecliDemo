@@ -11,12 +11,12 @@
 <script>
 export default {
   props: {
-    addTodo: Function
+    addTodo: Function,
   },
   data() {
     return {
       // 文本框内容
-      title: ""
+      title: "",
     };
   },
   methods: {
@@ -26,13 +26,14 @@ export default {
         const todo = {
           id: Date.now(),
           title: title,
-          isShow: false
+          isShow: false,
         };
-        this.addTodo(todo);
+        //this.addTodo(todo);
+        this.$emit("addTodo", todo);
       }
       this.title = "";
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

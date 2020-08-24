@@ -14,19 +14,20 @@
   </li>
 </template>
 <script>
+import PubSub from "pubsub-js";
 export default {
   props: {
     // 设置接收过来的todo的类型
     todo: Object,
     deleteToDo: Function,
     index: Number,
-    toggleToDo: Function
+    toggleToDo: Function,
   },
   data() {
     return {
       background: "white",
       footColor: "black",
-      isShow: false
+      isShow: false,
     };
   },
   methods: {
@@ -43,9 +44,10 @@ export default {
     },
     del(index) {
       if (confirm("确定删除么?")) {
-        this.deleteToDo(index);
+        // this.deleteToDo(index);
+        PubSub.publish("deleteToDo", this.index);
       }
-    }
+    },
   },
   computed: {
     isCompleted: {
@@ -53,10 +55,11 @@ export default {
         return this.todo.isShow;
       },
       set(val) {
-        this.toggleToDo(this.todo);
-      }
-    }
-  }
+        //this.toggleToDo(this.todo);
+        this.$bus.$emit("toggleToDo", this.todo);
+      },
+    },
+  },
 };
 </script>
 <style scoped>

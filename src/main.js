@@ -1,16 +1,17 @@
 // 引入Vue
-import Vue from 'vue'
+import Vue from "vue";
 // 引入App组件
-import App from './App.vue'
+import App from "./App.vue";
 // 干掉提示
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 // 实例化
 /* eslint-disable no-new */
+Vue.prototype.$bus = new Vue();
 new Vue({
-  el: '#app',
+  el: "#app",
   // 注册组件
   components: {
     App
   },
-  template: '<App/>'
-})
+  template: "<App/>"
+});
