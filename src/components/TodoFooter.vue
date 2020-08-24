@@ -6,7 +6,7 @@
     <span>
       <span>已完成{{ count }}</span> / 全部{{ todos.length }}
     </span>
-    <button class="btn btn-danger">清除已完成任务</button>
+    <button class="btn btn-danger" v-show="count > 0">清除已完成任务</button>
   </div>
 </template>
 <script>
@@ -17,9 +17,6 @@ export default {
   computed: {
     //勾选的个数
     count() {
-      this.todos.reduce(function(pre, todo) {
-        console.log(pre);
-      }, 0);
       return this.todos.reduce((pre, todo) => pre + (todo.isShow ? 1 : 0), 0);
     }
   }
