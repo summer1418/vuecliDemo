@@ -21,13 +21,13 @@ export default {
     todo: Object,
     deleteToDo: Function,
     index: Number,
-    toggleToDo: Function,
+    toggleToDo: Function
   },
   data() {
     return {
       background: "white",
       footColor: "black",
-      isShow: false,
+      isShow: false
     };
   },
   methods: {
@@ -47,19 +47,20 @@ export default {
         // this.deleteToDo(index);
         PubSub.publish("deleteToDo", this.index);
       }
-    },
+    }
   },
   computed: {
     isCompleted: {
       get() {
+        console.log(this);
         return this.todo.isShow;
       },
       set(val) {
         //this.toggleToDo(this.todo);
         this.$bus.$emit("toggleToDo", this.todo);
-      },
-    },
-  },
+      }
+    }
+  }
 };
 </script>
 <style scoped>
