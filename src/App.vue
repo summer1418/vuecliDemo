@@ -1,6 +1,6 @@
 <template>
   <div>
-    哈哈
+    哈噶
   </div>
 </template>
 <script>
