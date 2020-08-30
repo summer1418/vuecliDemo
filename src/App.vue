@@ -1,6 +1,6 @@
 <template>
   <div>
-    哈噶
+    哈测试
   </div>
 </template>
 <script>
